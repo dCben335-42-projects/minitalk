@@ -10,7 +10,7 @@ MKDIR = mkdir -p
 
 # includes
 INCLUDES_DIR = ./includes
-INCLUDES_FILES = minitalk.h
+INCLUDES_FILES = minitalk_utils.h minitalk_server.h minitalk_client.h
 INCLUDES = $(addprefix $(INCLUDES_DIR)/, $(INCLUDES_FILES))
 INCLUDES_FLAGS = -I $(INCLUDES_DIR)
 
@@ -18,7 +18,7 @@ INCLUDES_FLAGS = -I $(INCLUDES_DIR)
 SRC_DIR     = ./srcs
 SRC_CLIENT_FILES = client.c 
 SRC_SERVER_FILES = server.c
-SRC_UTILS_FILES = ft_putendl_fd.c ft_strlen.c ft_atoi_base.c ft_strchr.c ft_putnbr_base_fd.c ft_putull_base_fd.c
+SRC_UTILS_FILES = ft_putendl_fd.c ft_strlen.c ft_atoi.c ft_putnbr_fd.c ft_error.c ft_memset.c
 
 SRC_UTILS = $(addprefix $(SRC_DIR)/utils/, $(SRC_UTILS_FILES))
 SRC_CLIENT = $(addprefix $(SRC_DIR)/, $(SRC_CLIENT_FILES)) $(SRC_UTILS)

@@ -1,24 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strchr.c                                        :+:      :+:    :+:   */
+/*   minitalk_utils.h                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bcabocel <bcabocel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/30 10:03:35 by bcabocel          #+#    #+#             */
-/*   Updated: 2025/01/30 10:38:20 by bcabocel         ###   ########.fr       */
+/*   Created: 2025/02/05 01:31:06 by bcabocel          #+#    #+#             */
+/*   Updated: 2025/02/05 06:06:12 by bcabocel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-char	*ft_strchr(const char *s, int c)
+#ifndef MINITALK_UTILS_H
+# define MINITALK_UTILS_H
+
+# include <unistd.h>
+# include <sys/types.h>
+
+typedef enum e_bool
 {
-	while (*s)
-	{
-		if (*s == c)
-			return ((char *)s);
-		s++;
-	}
-	if (*s == c)
-		return ((char *)s);
-	return (0);
-}
+	false = 0,
+	true = 1,
+}	t_bool;
+
+size_t	ft_strlen(const char *s);
+int		ft_putendl_fd(const char *s, int fd);
+int		ft_atoi(const char *str);
+int		ft_putnbr_fd(int nb, int fd);
+void	ft_error(const char *msg);
+void	*ft_memset(void *b, int c, size_t len);
+
+#endif

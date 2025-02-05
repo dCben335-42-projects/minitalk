@@ -1,23 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   ft_memset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bcabocel <bcabocel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/30 09:38:11 by bcabocel          #+#    #+#             */
-/*   Updated: 2025/02/05 05:03:31 by bcabocel         ###   ########.fr       */
+/*   Created: 2025/02/05 01:50:54 by bcabocel          #+#    #+#             */
+/*   Updated: 2025/02/05 04:28:40 by bcabocel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 
-size_t	ft_strlen(const char *s)
+void	*ft_memset(void *b, int c, size_t len)
 {
-	size_t	i;
+	unsigned char	*ptr;
 
-	i = 0;
-	while (s[i])
-		i++;
-	return (i);
+	ptr = (unsigned char *)b;
+	while (len--)
+		*(ptr++) = (unsigned char)c;
+	return (b);
 }

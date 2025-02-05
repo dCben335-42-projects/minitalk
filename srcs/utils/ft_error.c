@@ -1,25 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putull_base_fd.c                                :+:      :+:    :+:   */
+/*   ft_error.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bcabocel <bcabocel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/21 22:45:00 by bcabocel          #+#    #+#             */
-/*   Updated: 2025/01/30 10:24:52 by bcabocel         ###   ########.fr       */
+/*   Created: 2025/02/05 01:42:56 by bcabocel          #+#    #+#             */
+/*   Updated: 2025/02/05 05:02:26 by bcabocel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minitalk.h"
+#include "minitalk_utils.h"
+#include <stdlib.h>
 
-int	ft_putull_base_fd(size_t nb, char *base, size_t base_len, int fd)
+void	ft_error(const char *msg)
 {
-	int	len;
-
-	len = 0;
-	if (nb >= base_len)
-		len += ft_putull_base_fd(nb / base_len, base, base_len, fd);
-	if (write(fd, &base[nb % base_len], 1) == -1)
-		return (-1);
-	return (len + 1);
+	ft_putendl_fd(msg, 2);
+	exit(1);
 }

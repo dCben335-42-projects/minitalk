@@ -1,38 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minitalk.h                                         :+:      :+:    :+:   */
+/*   minitalk_client.h                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bcabocel <bcabocel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 09:36:00 by bcabocel          #+#    #+#             */
-/*   Updated: 2025/01/30 11:39:13 by bcabocel         ###   ########.fr       */
+/*   Updated: 2025/02/05 06:45:47 by bcabocel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINITALK_H
-# define MINITALK_H
+#ifndef MINITALK_CLIENT_H
+# define MINITALK_CLIENT_H
 
 # include <signal.h>
-# include <unistd.h>
-# include <stdlib.h>
+# include "minitalk_utils.h"
 
-# define SERVER_USAGE_MSG "Usage: ./server\n"
-# define CLIENT_USAGE_MSG "Usage: ./client [server_pid] [message]\n"
+# define CLIENT_USAGE_MSG \
+	"Usage: ./client [server_pid] [message]"
 
-typedef enum e_bool
-{
-	FALSE = 0,
-	TRUE = 1,
-}	t_bool;
+# define EMPTY_MESSAGE_MSG \
+	 "Error: the message is empty"
 
-size_t	ft_strlen(const char *s);
-int	ft_putendl_fd(const char *s, int fd);
+# define INVALID_PID_FORMAT_MSG \
+	"Error: the pid passed is not a number greater than 0"
 
-int	ft_atoi_base(const char *str, char *base);
-char	*ft_strchr(const char *s, int c);
-char	*ft_itoa_base(int n, char *base);
-int	ft_putull_base_fd(size_t nb, char *base, size_t base_len, int fd);
-int	ft_putnbr_base_fd(int nb, char *base, int fd);
+# define WRONG_PID_MSG \
+	"Error: The pid passed does not match any process"
+
+# define SUCCESS_RECEIVED_MSG \
+	"Success: the message was well received"
 
 #endif

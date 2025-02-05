@@ -6,81 +6,80 @@
 /*   By: bcabocel <bcabocel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 09:37:04 by bcabocel          #+#    #+#             */
-/*   Updated: 2025/01/30 14:43:10 by bcabocel         ###   ########.fr       */
+/*   Updated: 2025/02/05 06:20:58 by bcabocel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minitalk.h"
-#include <time.h>
+#include "minitalk_client.h"
 #include <stdio.h>
+#include <stdlib.h>
 
-void	send_int(int pid, unsigned int value)
+volatile t_bool	g_is_bit_received = false;
+
+static void	sig_handler(int signal)
 {
-	int	bit;
-
-	bit = 31;
-	while (bit >= 0)
+	if (signal == SIGUSR1)
+		g_is_bit_received = true;
+	if (signal == SIGUSR2)
 	{
-		if (value >> bit & 1)
-			kill(pid, SIGUSR1);
-		else
-			kill(pid, SIGUSR2);
-		bit--;
-		usleep(50000);
+		ft_putendl_fd(SUCCESS_RECEIVED_MSG, 1);
+		exit(0);
 	}
 }
 
-void	send_char(int pid, unsigned char c)
+static void	send_bit(int pid, void *value, ssize_t bit)
 {
-	int	bit;
+	const unsigned char	*bytes = (const unsigned char *)value;
+	const int			byte_index = bit / 8;
+	const int			bit_index = bit % 8;
+	const int			bit_value = (bytes[byte_index] >> bit_index) & 1;
 
-	bit = 7;
-	while (bit >= 0)
+	if (bit_value)
 	{
-		if (c >> bit & 1)
-			kill(pid, SIGUSR1);
-		else
-			kill(pid, SIGUSR2);
-		usleep(200);
-		bit--;
+		if (kill(pid, SIGUSR1) == -1)
+			ft_error(WRONG_PID_MSG);
+	}
+	else
+	{
+		if (kill(pid, SIGUSR2) == -1)
+			ft_error(WRONG_PID_MSG);
+	}
+	while (!g_is_bit_received)
+		;
+	g_is_bit_received = false;
+}
+
+static void	send_message(int pid, char *message)
+{
+	size_t	message_len;
+	ssize_t	bit;
+
+	message_len = ft_strlen(message);
+	bit = 32;
+	while (--bit >= 0)
+		send_bit(pid, (void *)&message_len, bit);
+	while (*message)
+	{
+		bit = 8;
+		while (--bit >= 0)
+			send_bit(pid, message, bit);
+		message++;
 	}
 }
 
-void	send_message(int pid, char *message)
+int	main(int argc, char **argv)
 {
-	int	i;
+	pid_t	pid;
 
-	send_int(pid, (unsigned int)ft_strlen(message));
-	i = 0;
-	while (message[i])
-	{
-		send_char(pid, message[i]);
-		i++;
-	}
-}
-
-int main(int argc, char **argv)
-{
-	int pid;
-	
 	if (argc != 3)
-	{
-		ft_putendl_fd(CLIENT_USAGE_MSG, 2);
-		return (1);
-	}
-	if (ft_strlen(argv[2]) == 0)
-	{
-		ft_putendl_fd("Error: Empty message", 2);
-		return (1);
-	}
-	pid = ft_atoi_base(argv[1], "0123456789");
+		ft_error(CLIENT_USAGE_MSG);
+	if (!*argv[2])
+		ft_error(EMPTY_MESSAGE_MSG);
+	pid = ft_atoi(argv[1]);
 	if (pid <= 0)
-	{
-		ft_putendl_fd("Error: Invalid PID", 2);
-		return (1);
-	}
+		ft_error(INVALID_PID_FORMAT_MSG);
+	signal(SIGUSR1, sig_handler);
+	signal(SIGUSR2, sig_handler);
 	send_message(pid, argv[2]);
 	return (0);
 }
-
-
