@@ -6,7 +6,7 @@
 /*   By: bcabocel <bcabocel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 09:40:12 by bcabocel          #+#    #+#             */
-/*   Updated: 2025/02/05 06:34:52 by bcabocel         ###   ########.fr       */
+/*   Updated: 2025/02/06 21:03:21 by bcabocel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,11 +57,15 @@ static void	handle_signal(int signal, siginfo_t *info, void *context)
 	static t_server	server = {.is_receiving = false};
 
 	if (!server.is_receiving)
+	{
 		server = (t_server){
 			.is_receiving = true, .pid = info->si_pid,
 			.bit_index = 0, .char_index = 0,
 			.is_message_len_received = false, .message_len = 0, .message = NULL
 		};
+		kill(server.pid, SIGUSR1);
+		return ;
+	}
 	if (server.pid != info->si_pid)
 	{
 		if (server.message)
@@ -87,7 +91,7 @@ int	main(void)
 		|| ft_putnbr_fd(pid, 1) == -1
 		|| write(1, "\n", 1) == -1)
 		ft_error(WRITE_ERROR_MSG);
-	sa.sa_flags = SIGUSR1 | SIGUSR2;
+	sa.sa_flags = SA_SIGINFO;
 	sa.sa_sigaction = &handle_signal;
 	sigemptyset(&sa.sa_mask);
 	if (sigaction(SIGUSR1, &sa, NULL) == -1

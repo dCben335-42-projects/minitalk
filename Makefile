@@ -48,7 +48,9 @@ fclean: clean
 
 re: fclean all
 
+bonus: all
+
 force:
 	@true
 
-.PHONY: all clean fclean re force
+.PHONY: all clean fclean re bonus force 

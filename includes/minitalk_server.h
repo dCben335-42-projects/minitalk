@@ -6,14 +6,14 @@
 /*   By: bcabocel <bcabocel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 01:19:56 by bcabocel          #+#    #+#             */
-/*   Updated: 2025/02/05 06:50:02 by bcabocel         ###   ########.fr       */
+/*   Updated: 2025/02/06 19:03:41 by bcabocel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINITALK_SERVER_H
 # define MINITALK_SERVER_H
 
-// # define _POSIX_C_SOURCE 200809L
+# define _POSIX_C_SOURCE 200809L
 
 # include "minitalk_utils.h"
 # include <signal.h>

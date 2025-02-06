@@ -6,7 +6,7 @@
 /*   By: bcabocel <bcabocel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 09:37:04 by bcabocel          #+#    #+#             */
-/*   Updated: 2025/02/05 06:20:58 by bcabocel         ###   ########.fr       */
+/*   Updated: 2025/02/06 21:03:39 by bcabocel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-volatile t_bool	g_is_bit_received = false;
+static t_bool	g_is_bit_received = false;
 
 static void	sig_handler(int signal)
 {
@@ -27,23 +27,38 @@ static void	sig_handler(int signal)
 	}
 }
 
+static void	init_connection(int pid)
+{
+	size_t	time;
+
+	time = 0;
+	if (kill(pid, SIGUSR1) == -1)
+		ft_error(WRONG_PID_MSG);
+	while (!g_is_bit_received && time < TIMEOUT_US)
+	{
+		usleep(TIMEOUT_US / TIMEOUT_STEPS);
+		time += TIMEOUT_US / TIMEOUT_STEPS;
+	}
+	if (!g_is_bit_received)
+		ft_error(FIRST_SIGNAL_WITHOUT_RESPONSE_MSG);
+	g_is_bit_received = false;
+}
+
 static void	send_bit(int pid, void *value, ssize_t bit)
 {
 	const unsigned char	*bytes = (const unsigned char *)value;
-	const int			byte_index = bit / 8;
-	const int			bit_index = bit % 8;
-	const int			bit_value = (bytes[byte_index] >> bit_index) & 1;
+	const unsigned int	byte_index = bit / 8;
+	const unsigned int	bit_index = bit % 8;
+	const unsigned int	bit_value = (bytes[byte_index] >> bit_index) & 1;
 
 	if (bit_value)
 	{
 		if (kill(pid, SIGUSR1) == -1)
-			ft_error(WRONG_PID_MSG);
+			ft_error(NO_RESPONSE_MSG);
 	}
 	else
-	{
 		if (kill(pid, SIGUSR2) == -1)
-			ft_error(WRONG_PID_MSG);
-	}
+			ft_error(NO_RESPONSE_MSG);
 	while (!g_is_bit_received)
 		;
 	g_is_bit_received = false;
@@ -80,6 +95,7 @@ int	main(int argc, char **argv)
 		ft_error(INVALID_PID_FORMAT_MSG);
 	signal(SIGUSR1, sig_handler);
 	signal(SIGUSR2, sig_handler);
+	init_connection(pid);
 	send_message(pid, argv[2]);
 	return (0);
 }
