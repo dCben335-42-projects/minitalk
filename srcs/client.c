@@ -6,7 +6,7 @@
 /*   By: bcabocel <bcabocel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 09:37:04 by bcabocel          #+#    #+#             */
-/*   Updated: 2025/02/06 21:03:39 by bcabocel         ###   ########.fr       */
+/*   Updated: 2025/02/11 18:28:05 by bcabocel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ int	main(int argc, char **argv)
 		ft_error(CLIENT_USAGE_MSG);
 	if (!*argv[2])
 		ft_error(EMPTY_MESSAGE_MSG);
-	pid = ft_atoi(argv[1]);
+	pid = ft_mini_atoi(argv[1]);
 	if (pid <= 0)
 		ft_error(INVALID_PID_FORMAT_MSG);
 	signal(SIGUSR1, sig_handler);

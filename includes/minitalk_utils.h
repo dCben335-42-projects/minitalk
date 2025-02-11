@@ -6,7 +6,7 @@
 /*   By: bcabocel <bcabocel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 01:31:06 by bcabocel          #+#    #+#             */
-/*   Updated: 2025/02/05 06:06:12 by bcabocel         ###   ########.fr       */
+/*   Updated: 2025/02/11 18:27:07 by bcabocel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ typedef enum e_bool
 
 size_t	ft_strlen(const char *s);
 int		ft_putendl_fd(const char *s, int fd);
-int		ft_atoi(const char *str);
+int		ft_mini_atoi(const char *str);
 int		ft_putnbr_fd(int nb, int fd);
 void	ft_error(const char *msg);
 void	*ft_memset(void *b, int c, size_t len);

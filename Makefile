@@ -18,7 +18,7 @@ INCLUDES_FLAGS = -I $(INCLUDES_DIR)
 SRC_DIR     = ./srcs
 SRC_CLIENT_FILES = client.c 
 SRC_SERVER_FILES = server.c
-SRC_UTILS_FILES = ft_putendl_fd.c ft_strlen.c ft_atoi.c ft_putnbr_fd.c ft_error.c ft_memset.c
+SRC_UTILS_FILES = ft_putendl_fd.c ft_strlen.c ft_mini_atoi.c ft_putnbr_fd.c ft_error.c ft_memset.c
 
 SRC_UTILS = $(addprefix $(SRC_DIR)/utils/, $(SRC_UTILS_FILES))
 SRC_CLIENT = $(addprefix $(SRC_DIR)/, $(SRC_CLIENT_FILES)) $(SRC_UTILS)
