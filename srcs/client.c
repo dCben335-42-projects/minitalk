@@ -6,7 +6,7 @@
 /*   By: bcabocel <bcabocel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 09:37:04 by bcabocel          #+#    #+#             */
-/*   Updated: 2025/02/11 18:28:05 by bcabocel         ###   ########.fr       */
+/*   Updated: 2025/02/11 19:07:45 by bcabocel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ static void	send_bit(int pid, void *value, ssize_t bit)
 	const unsigned int	byte_index = bit / 8;
 	const unsigned int	bit_index = bit % 8;
 	const unsigned int	bit_value = (bytes[byte_index] >> bit_index) & 1;
+	size_t	time;
 
 	if (bit_value)
 	{
@@ -59,8 +60,14 @@ static void	send_bit(int pid, void *value, ssize_t bit)
 	else
 		if (kill(pid, SIGUSR2) == -1)
 			ft_error(NO_RESPONSE_MSG);
-	while (!g_is_bit_received)
-		;
+	time = 0;
+	while (!g_is_bit_received && time < 5000)
+	{
+		time++;
+		usleep(5);
+	}
+	if (!g_is_bit_received)
+		ft_error(NO_RESPONSE_MSG);
 	g_is_bit_received = false;
 }
 
