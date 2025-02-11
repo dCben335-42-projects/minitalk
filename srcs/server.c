@@ -6,7 +6,7 @@
 /*   By: bcabocel <bcabocel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 09:40:12 by bcabocel          #+#    #+#             */
-/*   Updated: 2025/02/06 21:03:21 by bcabocel         ###   ########.fr       */
+/*   Updated: 2025/02/11 03:17:44 by bcabocel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,13 +89,15 @@ int	main(void)
 		ft_error(PID_ERROR_MSG);
 	if (write(1, SERVER_PID_MSG, ft_strlen(SERVER_PID_MSG)) == -1
 		|| ft_putnbr_fd(pid, 1) == -1
-		|| write(1, "\n", 1) == -1)
+		|| write(1, "\n", 1) == -1
+	)
 		ft_error(WRITE_ERROR_MSG);
 	sa.sa_flags = SA_SIGINFO;
 	sa.sa_sigaction = &handle_signal;
 	sigemptyset(&sa.sa_mask);
 	if (sigaction(SIGUSR1, &sa, NULL) == -1
-		|| sigaction(SIGUSR2, &sa, NULL) == -1)
+		|| sigaction(SIGUSR2, &sa, NULL) == -1
+	)
 		ft_error(SIGACTION_ERROR_MSG);
 	while (1)
 		pause();

@@ -50,7 +50,10 @@ re: fclean all
 
 bonus: all
 
+norminette:
+	norminette $(SRC_DIR) $(INCLUDES_DIR)
+
 force:
 	@true
 
-.PHONY: all clean fclean re bonus force 
+.PHONY: all clean fclean re bonus force norminette
