@@ -1,20 +1,50 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minitalk_client.h                                  :+:      :+:    :+:   */
+/*   minitalk.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bcabocel <bcabocel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/30 09:36:00 by bcabocel          #+#    #+#             */
-/*   Updated: 2025/02/12 14:19:33 by bcabocel         ###   ########.fr       */
+/*   Created: 2025/02/12 15:25:07 by bcabocel          #+#    #+#             */
+/*   Updated: 2025/02/12 15:25:34 by bcabocel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINITALK_CLIENT_H
-# define MINITALK_CLIENT_H
+#ifndef MINITALK_H
+# define MINITALK_H
 
-# include <signal.h>
 # include "minitalk_utils.h"
+# include <signal.h>
+# include <stdlib.h>
+
+# define SERVER_PID_MSG \
+	"Server pid: "
+
+# define MALLOC_ERROR_MSG \
+	"Error: malloc system call failed"
+
+# define WRITE_ERROR_MSG \
+	"Error: write system call failed"
+
+# define PID_ERROR_MSG \
+	"Error: the pid has not been granted by the system"
+
+# define SIGACTION_ERROR_MSG \
+	"Error: sigaction system call failed"
+
+# define DIFFERENT_CLIENT_MSG \
+	"Error: A signal came from a different client during message processing."
+
+typedef struct s_server
+{
+	t_bool			is_receiving;
+	pid_t			pid;
+	t_bool			is_message_len_received;
+	unsigned int	message_len;
+	unsigned char	*message;
+	unsigned int	char_index;
+	unsigned int	bit_index;
+}	t_server;
 
 # define CLIENT_USAGE_MSG \
 	"Usage: ./client [server_pid] [message]"

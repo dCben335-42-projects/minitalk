@@ -10,7 +10,7 @@ MKDIR = mkdir -p
 
 # includes
 INCLUDES_DIR = ./includes
-INCLUDES_FILES = minitalk_utils.h minitalk_server.h minitalk_client.h
+INCLUDES_FILES = minitalk_utils.h minitalk.h
 INCLUDES = $(addprefix $(INCLUDES_DIR)/, $(INCLUDES_FILES))
 INCLUDES_FLAGS = -I $(INCLUDES_DIR)
 

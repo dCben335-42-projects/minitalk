@@ -6,11 +6,11 @@
 /*   By: bcabocel <bcabocel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 09:40:12 by bcabocel          #+#    #+#             */
-/*   Updated: 2025/02/12 14:02:42 by bcabocel         ###   ########.fr       */
+/*   Updated: 2025/02/12 15:25:50 by bcabocel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minitalk_server.h"
+#include "minitalk.h"
 
 static void	handle_message(int signal, t_server *server)
 {
@@ -28,7 +28,7 @@ static void	handle_message(int signal, t_server *server)
 				ft_error(WRITE_ERROR_MSG);
 			}
 			free(server->message);
-			server->is_receiving = false;
+			server->is_receiving = FALSE;
 		}
 	}
 	else
@@ -41,7 +41,7 @@ static void	handle_message_len(int signal, t_server *server)
 	if (++(server->bit_index) == 32)
 	{
 		server->bit_index = 0;
-		server->is_message_len_received = true;
+		server->is_message_len_received = TRUE;
 		server->message = malloc((server->message_len + 1)
 				* sizeof(unsigned char));
 		if (!server->message)
@@ -54,13 +54,13 @@ static void	handle_message_len(int signal, t_server *server)
 
 static void	handle_signal(int signal, siginfo_t *info, void *context)
 {
-	static t_server	server = {.is_receiving = false};
+	static t_server	server = {.is_receiving = FALSE};
 
 	if (!server.is_receiving)
 		server = (t_server){
-			.is_receiving = true, .pid = info->si_pid,
+			.is_receiving = TRUE, .pid = info->si_pid,
 			.bit_index = 0, .char_index = 0,
-			.is_message_len_received = false, .message_len = 0, .message = NULL
+			.is_message_len_received = FALSE, .message_len = 0, .message = NULL
 		};
 	if (server.pid != info->si_pid)
 	{

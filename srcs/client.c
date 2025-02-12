@@ -6,20 +6,20 @@
 /*   By: bcabocel <bcabocel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 09:37:04 by bcabocel          #+#    #+#             */
-/*   Updated: 2025/02/12 14:15:30 by bcabocel         ###   ########.fr       */
+/*   Updated: 2025/02/12 15:25:54 by bcabocel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minitalk_client.h"
+#include "minitalk.h"
 #include <stdio.h>
 #include <stdlib.h>
 
-static t_bool	g_is_bit_received = false;
+static t_bool	g_is_bit_received = FALSE;
 
 static void	sig_handler(int signal)
 {
 	if (signal == SIGUSR1)
-		g_is_bit_received = true;
+		g_is_bit_received = TRUE;
 	if (signal == SIGUSR2)
 	{
 		ft_putendl_fd(SUCCESS_RECEIVED_MSG, 1);
@@ -40,7 +40,7 @@ static void	wait_response(void)
 	}
 	if (!g_is_bit_received)
 		ft_error(NO_RESPONSE_MSG);
-	g_is_bit_received = false;
+	g_is_bit_received = FALSE;
 }
 
 static void	send_bit(int pid, void *value, ssize_t bit)

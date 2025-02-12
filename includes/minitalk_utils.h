@@ -6,7 +6,7 @@
 /*   By: bcabocel <bcabocel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 01:31:06 by bcabocel          #+#    #+#             */
-/*   Updated: 2025/02/11 18:27:07 by bcabocel         ###   ########.fr       */
+/*   Updated: 2025/02/12 14:48:57 by bcabocel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@
 
 typedef enum e_bool
 {
-	false = 0,
-	true = 1,
+	FALSE = 0,
+	TRUE = 1,
 }	t_bool;
 
 size_t	ft_strlen(const char *s);
