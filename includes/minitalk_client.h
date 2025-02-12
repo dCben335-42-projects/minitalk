@@ -6,7 +6,7 @@
 /*   By: bcabocel <bcabocel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 09:36:00 by bcabocel          #+#    #+#             */
-/*   Updated: 2025/02/11 18:29:16 by bcabocel         ###   ########.fr       */
+/*   Updated: 2025/02/12 14:19:33 by bcabocel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,10 @@
 	"Error: The message is empty"
 
 # define INVALID_PID_FORMAT_MSG \
-	"Error: The pid passed is not a positive integer"
+	"Error: The pid passed is not a positive integ"
 
 # define WRONG_PID_MSG \
 	"Error: The pid passed does not match any process"
-
-# define FIRST_SIGNAL_WITHOUT_RESPONSE_MSG \
-	"Error: The server did not respond, Maybe the pid is wrong"
 
 # define NO_RESPONSE_MSG \
 	"Error: The server did not respond, Maybe it is not running anymore"
@@ -37,7 +34,7 @@
 # define SUCCESS_RECEIVED_MSG \
 	"Success: The message was well received"
 
-# define TIMEOUT_US 5000000
-# define TIMEOUT_STEPS 100
+# define TIMEOUT_US 1000000
+# define TIMEOUT_STEPS 10000
 
 #endif

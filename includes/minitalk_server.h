@@ -6,7 +6,7 @@
 /*   By: bcabocel <bcabocel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 01:19:56 by bcabocel          #+#    #+#             */
-/*   Updated: 2025/02/06 19:03:41 by bcabocel         ###   ########.fr       */
+/*   Updated: 2025/02/12 14:03:51 by bcabocel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@
 	"Error: the pid has not been granted by the system"
 
 # define SIGACTION_ERROR_MSG \
-	"Error: sigaction"
+	"Error: sigaction system call failed"
 
 # define DIFFERENT_CLIENT_MSG \
 	"Error: A signal came from a different client during message processing."

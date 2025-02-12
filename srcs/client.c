@@ -6,7 +6,7 @@
 /*   By: bcabocel <bcabocel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 09:37:04 by bcabocel          #+#    #+#             */
-/*   Updated: 2025/02/11 19:07:45 by bcabocel         ###   ########.fr       */
+/*   Updated: 2025/02/12 14:15:30 by bcabocel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,20 +27,19 @@ static void	sig_handler(int signal)
 	}
 }
 
-static void	init_connection(int pid)
+static void	wait_response(void)
 {
-	size_t	time;
+	const size_t	delay = TIMEOUT_US / TIMEOUT_STEPS;
+	size_t			time;
 
 	time = 0;
-	if (kill(pid, SIGUSR1) == -1)
-		ft_error(WRONG_PID_MSG);
 	while (!g_is_bit_received && time < TIMEOUT_US)
 	{
-		usleep(TIMEOUT_US / TIMEOUT_STEPS);
-		time += TIMEOUT_US / TIMEOUT_STEPS;
+		usleep(delay);
+		time += delay;
 	}
 	if (!g_is_bit_received)
-		ft_error(FIRST_SIGNAL_WITHOUT_RESPONSE_MSG);
+		ft_error(NO_RESPONSE_MSG);
 	g_is_bit_received = false;
 }
 
@@ -50,25 +49,16 @@ static void	send_bit(int pid, void *value, ssize_t bit)
 	const unsigned int	byte_index = bit / 8;
 	const unsigned int	bit_index = bit % 8;
 	const unsigned int	bit_value = (bytes[byte_index] >> bit_index) & 1;
-	size_t	time;
 
 	if (bit_value)
 	{
 		if (kill(pid, SIGUSR1) == -1)
-			ft_error(NO_RESPONSE_MSG);
+			ft_error(WRONG_PID_MSG);
 	}
 	else
 		if (kill(pid, SIGUSR2) == -1)
-			ft_error(NO_RESPONSE_MSG);
-	time = 0;
-	while (!g_is_bit_received && time < 5000)
-	{
-		time++;
-		usleep(5);
-	}
-	if (!g_is_bit_received)
-		ft_error(NO_RESPONSE_MSG);
-	g_is_bit_received = false;
+			ft_error(WRONG_PID_MSG);
+	wait_response();
 }
 
 static void	send_message(int pid, char *message)
@@ -102,7 +92,6 @@ int	main(int argc, char **argv)
 		ft_error(INVALID_PID_FORMAT_MSG);
 	signal(SIGUSR1, sig_handler);
 	signal(SIGUSR2, sig_handler);
-	init_connection(pid);
 	send_message(pid, argv[2]);
 	return (0);
 }
